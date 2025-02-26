@@ -64,18 +64,32 @@ const List = () => {
         setAlllist((prev) => [...prev, item]);
     };
 
+    const removeLastItem = (type) => {
+        if (type === "Vegetable" && vegetables.length > 0) {
+            const lastItem = vegetables[vegetables.length - 1]; // ดึงรายการสุดท้าย
+            setVegetables(vegetables.slice(0, -1)); // ลบรายการสุดท้ายออกจาก Vegetable
+            setAllList((prev) => [...prev, lastItem].sort((a, b) => a.name.localeCompare(b.name))); // เพิ่มเข้า allList แล้วเรียงลำดับ
+        } else if (type === "Fruit" && fruits.length > 0) {
+            const lastItem = fruits[fruits.length - 1]; // ดึงรายการสุดท้าย
+            setFruits(fruits.slice(0, -1)); // ลบรายการสุดท้ายออกจาก Fruit
+            setAllList((prev) => [...prev, lastItem].sort((a, b) => a.name.localeCompare(b.name))); // เพิ่มเข้า allList แล้วเรียงลำดับ
+        }
+        setAlllist((prev) => [...prev, item]);
+    };
+
+
+
     return (
         <div className="flex justify-center items-center h-screen p-4">
             <div className="grid grid-cols-3 gap-4 w-2xl h-full pb-30">
                 {/* คอลัมน์ที่ 1: ปุ่มจาก allList */}
-                <div className="flex flex-col space-y-2 rounded ">
-
+                <div className="flex flex-col space-y-2 rounded">
                     {allList
                         .sort((a, b) => a.name.localeCompare(b.name)) // เรียงลำดับ
                         .map((item, index) => (
                             <div
                                 key={index}
-                                className=" text-black py-2 px-4 rounded transition cursor-pointer border-2 border-gray-200"
+                                className="text-black py-2 px-4 rounded transition cursor-pointer border-2 border-gray-200"
                                 onClick={() => addItem(item)}
                             >
                                 {item.name}
@@ -84,13 +98,21 @@ const List = () => {
                 </div>
 
                 {/* คอลัมน์ที่ 2: รายการ Vegetable */}
-                <div className="flex flex-col space-y-2 rounded border-2 border-gray-200">
-                    <h2 className="font-bold border-2 py-2 border-gray-200 bg-gray-300 ">Vegetables</h2>
+                <div
+                    className="flex flex-col space-y-2 rounded border-2 border-gray-200"
+                    onClick={() => removeLastItem("Vegetable")}
+                >
+                    <h2 className="font-bold border-2 py-2 border-gray-200 bg-gray-300">
+                        Vegetables
+                    </h2>
                     {vegetables.map((veg, index) => (
                         <div
                             key={index}
-                            className=" bg-white my-2 mx-4 p-2 rounded cursor-pointer border-2 border-gray-200"
-                            onClick={() => removeItem(veg, "Vegetable")}
+                            className="bg-white my-2 mx-4 p-2 rounded cursor-pointer border-2 border-gray-200"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                removeItem(veg, "Vegetable");
+                            }}
                         >
                             {veg.name}
                         </div>
@@ -98,20 +120,29 @@ const List = () => {
                 </div>
 
                 {/* คอลัมน์ที่ 3: รายการ Fruit */}
-                <div className=" flex flex-col space-y-2 rounded border-2 border-gray-200">
-                    <h2 className="font-bold border-2 py-2 border-gray-200 bg-gray-300">Fruits</h2>
+                <div
+                    className="flex flex-col space-y-2 rounded border-2 border-gray-200"
+                    onClick={() => removeLastItem("Fruit")}
+                >
+                    <h2 className="font-bold border-2 py-2 border-gray-200 bg-gray-300">
+                        Fruits
+                    </h2>
                     {fruits.map((fruit, index) => (
                         <div
                             key={index}
                             className="bg-white my-2 mx-4 p-2 rounded cursor-pointer border-2 border-gray-200"
-                            onClick={() => removeItem(fruit, "Fruit")}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                removeItem(fruit, "Fruit");
+                            }}
                         >
                             {fruit.name}
                         </div>
                     ))}
                 </div>
-            </div >
-        </div >
+            </div>
+        </div>
+
     );
 };
 
