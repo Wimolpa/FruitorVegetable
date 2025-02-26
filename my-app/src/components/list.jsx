@@ -81,7 +81,7 @@ const List = () => {
         <div className="flex justify-center items-center h-screen p-4">
             <div className="grid grid-cols-3 gap-4 w-2xl h-full pb-30">
 
-                <div className="flex flex-col space-y-2 rounded">
+                <div className="flex flex-col space-y-2 rounded ">
                     {allList
                         .sort((a, b) => a.name.localeCompare(b.name))
                         .map((item, index) => (
@@ -106,7 +106,7 @@ const List = () => {
                     {vegetables.map((veg, index) => (
                         <div
                             key={index}
-                            className="bg-white my-2 mx-4 p-2 rounded cursor-pointer border-2 border-gray-200"
+                            className=" text-black bg-white my-2 mx-4 p-2 rounded cursor-pointer border-2 border-gray-200"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 removeItem(veg, "Vegetable");
@@ -127,7 +127,7 @@ const List = () => {
                     {fruits.map((fruit, index) => (
                         <div
                             key={index}
-                            className="bg-white my-2 mx-4 p-2 rounded cursor-pointer border-2 border-gray-200"
+                            className="text-black bg-white my-2 mx-4 p-2 rounded cursor-pointer border-2 border-gray-200"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 removeItem(fruit, "Fruit");
